@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace webignition\BasilDomIdentifierFactory;
 
-use webignition\BasilDomIdentifier\Model\DomIdentifier;
+use webignition\BasilDomIdentifier\DomIdentifier;
 use webignition\BasilDomIdentifierFactory\Extractor\DescendantExtractor;
 use webignition\BasilDomIdentifierFactory\Extractor\PageElementIdentifierExtractor;
 use webignition\BasilIdentifierAnalyser\IdentifierTypeAnalyser;

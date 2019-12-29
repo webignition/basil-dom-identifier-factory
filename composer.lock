@@ -4,27 +4,25 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5b0f752cfacdb9aea70c5ce3d9de2941",
+    "content-hash": "5e3bd2deb883f03d5d0b834bafa80abf",
     "packages": [
         {
             "name": "webignition/basil-dom-identifier",
-            "version": "0.1",
+            "version": "0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/webignition/basil-dom-identifier.git",
-                "reference": "f229463a02f2d4633af7823b0f4ae3baa862f6d9"
+                "reference": "27ff1fbf980074bb1ac4dd4f81c050a41dff7eb2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/webignition/basil-dom-identifier/zipball/f229463a02f2d4633af7823b0f4ae3baa862f6d9",
-                "reference": "f229463a02f2d4633af7823b0f4ae3baa862f6d9",
+                "url": "https://api.github.com/repos/webignition/basil-dom-identifier/zipball/27ff1fbf980074bb1ac4dd4f81c050a41dff7eb2",
+                "reference": "27ff1fbf980074bb1ac4dd4f81c050a41dff7eb2",
                 "shasum": ""
             },
             "require": {
                 "php": ">=7.2",
-                "webignition/basil-identifier-analyser": ">=0.2,<1",
-                "webignition/php-dom-element-locator": ">=0.2,<1",
-                "webignition/quoted-string-value-extractor": ">=0.1.0,<1"
+                "webignition/php-dom-element-locator": ">=0.2,<1"
             },
             "require-dev": {
                 "phpstan/phpstan": "^0.12",
@@ -48,7 +46,7 @@
                 }
             ],
             "homepage": "https://github.com/webignition/basil-dom-identifier",
-            "time": "2019-12-29T16:38:59+00:00"
+            "time": "2019-12-29T18:46:42+00:00"
         },
         {
             "name": "webignition/basil-identifier-analyser",
