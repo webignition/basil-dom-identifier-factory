@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace webignition\BasilDomIdentifierFactory\Tests\Unit;
 
-use webignition\BasilDomIdentifier\Model\DomIdentifier;
+use webignition\BasilDomIdentifier\DomIdentifier;
 use webignition\BasilDomIdentifierFactory\Factory;
 
 class FactoryTest extends \PHPUnit\Framework\TestCase
