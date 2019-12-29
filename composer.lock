@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f1c7726c74b649040c78ef3cb5b64c37",
+    "content-hash": "5b0f752cfacdb9aea70c5ce3d9de2941",
     "packages": [
         {
             "name": "webignition/basil-dom-identifier",
