@@ -4,10 +4,11 @@ declare(strict_types=1);
 
 namespace webignition\BasilDomIdentifierFactory;
 
-use webignition\BasilDomIdentifier\DomIdentifier;
 use webignition\BasilDomIdentifierFactory\Extractor\DescendantIdentifierExtractor;
 use webignition\BasilDomIdentifierFactory\Extractor\ElementIdentifierExtractor;
 use webignition\BasilIdentifierAnalyser\IdentifierTypeAnalyser;
+use webignition\DomElementIdentifier\DomIdentifier;
+use webignition\DomElementIdentifier\DomIdentifierInterface;
 use webignition\QuotedStringValueExtractor\QuotedStringValueExtractor;
 
 class Factory
@@ -49,7 +50,7 @@ class Factory
         );
     }
 
-    public function createFromIdentifierString(string $identifierString): ?DomIdentifier
+    public function createFromIdentifierString(string $identifierString): ?DomIdentifierInterface
     {
         $pageElementIdentifier = $this->pageElementIdentifierExtractor->extractIdentifier($identifierString);
         if (is_string($pageElementIdentifier)) {
@@ -64,7 +65,7 @@ class Factory
         return null;
     }
 
-    private function createFromPageElementIdentifierString(string $identifierString): DomIdentifier
+    private function createFromPageElementIdentifierString(string $identifierString): DomIdentifierInterface
     {
         $elementIdentifier = $identifierString;
         $attributeName = '';
@@ -91,7 +92,7 @@ class Factory
         return $identifier;
     }
 
-    private function createFromDescendantIdentifierString(string $identifierString): DomIdentifier
+    private function createFromDescendantIdentifierString(string $identifierString): DomIdentifierInterface
     {
         $parentIdentifier = $this->descendantExtractor->extractParentIdentifier($identifierString);
         $childIdentifier = $this->descendantExtractor->extractChildIdentifier($identifierString);

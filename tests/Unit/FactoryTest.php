@@ -4,8 +4,9 @@ declare(strict_types=1);
 
 namespace webignition\BasilDomIdentifierFactory\Tests\Unit;
 
-use webignition\BasilDomIdentifier\DomIdentifier;
 use webignition\BasilDomIdentifierFactory\Factory;
+use webignition\DomElementIdentifier\DomIdentifier;
+use webignition\DomElementIdentifier\DomIdentifierInterface;
 
 class FactoryTest extends \PHPUnit\Framework\TestCase
 {
@@ -27,11 +28,13 @@ class FactoryTest extends \PHPUnit\Framework\TestCase
      * @dataProvider descendantIdentifierDataProvider
      * @dataProvider xpathExpressionIdentifierDataProvider
      */
-    public function testCreateFromIdentifierStringSuccess(string $identifierString, DomIdentifier $expectedIdentifier)
-    {
+    public function testCreateFromIdentifierStringSuccess(
+        string $identifierString,
+        DomIdentifierInterface $expectedIdentifier
+    ) {
         $identifier = $this->factory->createFromIdentifierString($identifierString);
 
-        $this->assertInstanceOf(DomIdentifier::class, $identifier);
+        $this->assertInstanceOf(DomIdentifierInterface::class, $identifier);
         $this->assertEquals($expectedIdentifier, $identifier);
     }
 
