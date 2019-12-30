@@ -19,7 +19,7 @@ class ElementIdentifierExtractor
         return new ElementIdentifierExtractor();
     }
 
-    public function extractIdentifierString(string $string): ?string
+    public function extractIdentifier(string $string): ?string
     {
         if (!$this->handles($string)) {
             return null;

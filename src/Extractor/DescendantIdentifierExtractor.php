@@ -24,7 +24,7 @@ class DescendantIdentifierExtractor
         );
     }
 
-    public function extract(string $string): ?string
+    public function extractIdentifier(string $string): ?string
     {
         $parentIdentifier = $this->extractParentIdentifier($string);
         if (null === $parentIdentifier) {
@@ -71,7 +71,7 @@ class DescendantIdentifierExtractor
         $parentReference = '{{ ' . $parentIdentifier . ' }}';
 
         $childReference = mb_substr($string, mb_strlen($parentReference) + 1);
-        $childIdentifier = $this->elementIdentifierExtractor->extractIdentifierString($childReference);
+        $childIdentifier = $this->elementIdentifierExtractor->extractIdentifier($childReference);
 
         if (null === $childIdentifier) {
             return null;
@@ -86,7 +86,7 @@ class DescendantIdentifierExtractor
             return true;
         }
 
-        if (null !== $this->elementIdentifierExtractor->extractIdentifierString($string)) {
+        if (null !== $this->elementIdentifierExtractor->extractIdentifier($string)) {
             return true;
         }
 

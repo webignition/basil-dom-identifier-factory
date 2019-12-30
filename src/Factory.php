@@ -51,12 +51,12 @@ class Factory
 
     public function createFromIdentifierString(string $identifierString): ?DomIdentifier
     {
-        $pageElementIdentifier = $this->pageElementIdentifierExtractor->extractIdentifierString($identifierString);
+        $pageElementIdentifier = $this->pageElementIdentifierExtractor->extractIdentifier($identifierString);
         if (is_string($pageElementIdentifier)) {
             return $this->createFromPageElementIdentifierString($pageElementIdentifier);
         }
 
-        $descendantIdentifier = $this->descendantExtractor->extract($identifierString);
+        $descendantIdentifier = $this->descendantExtractor->extractIdentifier($identifierString);
         if (is_string($descendantIdentifier)) {
             return $this->createFromDescendantIdentifierString($descendantIdentifier);
         }

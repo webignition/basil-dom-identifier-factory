@@ -23,9 +23,9 @@ class DescendantIdentifierExtractorTest extends \PHPUnit\Framework\TestCase
     /**
      * @dataProvider returnsEmptyValueDataProvider
      */
-    public function testExtractReturnsEmptyValue(string $string)
+    public function testExtractIdentifierReturnsEmptyValue(string $string)
     {
-        $this->assertNull($this->extractor->extract($string));
+        $this->assertNull($this->extractor->extractIdentifier($string));
     }
 
     public function returnsEmptyValueDataProvider(): array
@@ -55,9 +55,9 @@ class DescendantIdentifierExtractorTest extends \PHPUnit\Framework\TestCase
     /**
      * @dataProvider descendantIdentifierStringDataProvider
      */
-    public function testExtractReturnsString(string $string, string $expectedIdentifierString)
+    public function testExtractIdentifierReturnsString(string $string, string $expectedIdentifierString)
     {
-        $identifierString = $this->extractor->extract($string);
+        $identifierString = $this->extractor->extractIdentifier($string);
 
         $this->assertSame($expectedIdentifierString, $identifierString);
     }

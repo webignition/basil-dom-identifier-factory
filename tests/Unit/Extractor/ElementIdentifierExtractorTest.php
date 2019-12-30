@@ -23,9 +23,9 @@ class ElementIdentifierExtractorTest extends \PHPUnit\Framework\TestCase
     /**
      * @dataProvider unhandledStringsDataProvider
      */
-    public function testExtractIdentifierStringReturnsEmptyValue(string $string)
+    public function testExtractIdentifierReturnsEmptyValue(string $string)
     {
-        $this->assertNull($this->extractor->extractIdentifierString($string));
+        $this->assertNull($this->extractor->extractIdentifier($string));
     }
 
     public function unhandledStringsDataProvider(): array
@@ -43,9 +43,9 @@ class ElementIdentifierExtractorTest extends \PHPUnit\Framework\TestCase
     /**
      * @dataProvider identifierStringDataProvider
      */
-    public function testExtractIdentifierStringReturnsString(string $string, string $expectedIdentifierString)
+    public function testExtractIdentifierReturnsString(string $string, string $expectedIdentifierString)
     {
-        $identifierString = $this->extractor->extractIdentifierString($string);
+        $identifierString = $this->extractor->extractIdentifier($string);
 
         $this->assertSame($expectedIdentifierString, $identifierString);
     }
