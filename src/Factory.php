@@ -7,8 +7,9 @@ namespace webignition\BasilDomIdentifierFactory;
 use webignition\BasilDomIdentifierFactory\Extractor\DescendantIdentifierExtractor;
 use webignition\BasilDomIdentifierFactory\Extractor\ElementIdentifierExtractor;
 use webignition\BasilIdentifierAnalyser\IdentifierTypeAnalyser;
-use webignition\DomElementIdentifier\DomIdentifier;
-use webignition\DomElementIdentifier\DomIdentifierInterface;
+use webignition\DomElementIdentifier\AttributeIdentifier;
+use webignition\DomElementIdentifier\ElementIdentifier;
+use webignition\DomElementIdentifier\ElementIdentifierInterface;
 use webignition\QuotedStringValueExtractor\QuotedStringValueExtractor;
 
 class Factory
@@ -50,7 +51,7 @@ class Factory
         );
     }
 
-    public function createFromIdentifierString(string $identifierString): ?DomIdentifierInterface
+    public function createFromIdentifierString(string $identifierString): ?ElementIdentifierInterface
     {
         $pageElementIdentifier = $this->pageElementIdentifierExtractor->extractIdentifier($identifierString);
         if (is_string($pageElementIdentifier)) {
@@ -65,7 +66,7 @@ class Factory
         return null;
     }
 
-    private function createFromPageElementIdentifierString(string $identifierString): DomIdentifierInterface
+    private function createFromPageElementIdentifierString(string $identifierString): ElementIdentifierInterface
     {
         $elementIdentifier = $identifierString;
         $attributeName = '';
@@ -83,16 +84,12 @@ class Factory
             ltrim($quotedElementLocatorReference, '$')
         );
 
-        $identifier = new DomIdentifier($elementLocatorString, $position);
-
-        if ('' !== $attributeName) {
-            $identifier = $identifier->withAttributeName($attributeName);
-        }
-
-        return $identifier;
+        return '' === $attributeName
+            ? new ElementIdentifier($elementLocatorString, $position)
+            : new AttributeIdentifier($elementLocatorString, $attributeName, $position);
     }
 
-    private function createFromDescendantIdentifierString(string $identifierString): DomIdentifierInterface
+    private function createFromDescendantIdentifierString(string $identifierString): ElementIdentifierInterface
     {
         $parentIdentifier = $this->descendantExtractor->extractParentIdentifier($identifierString);
         $childIdentifier = $this->descendantExtractor->extractChildIdentifier($identifierString);

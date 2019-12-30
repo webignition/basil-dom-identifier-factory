@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "850f03ac00e21213c4ad670555e4ae85",
+    "content-hash": "3c690560a0639fbb68c3e5f2ec2b9841",
     "packages": [
         {
             "name": "webignition/basil-identifier-analyser",
@@ -49,16 +49,16 @@
         },
         {
             "name": "webignition/php-dom-element-identifier",
-            "version": "0.4",
+            "version": "0.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/webignition/php-dom-element-identifier.git",
-                "reference": "de79797da971007086c5b64fd5018297661dd6e8"
+                "reference": "d5917717c0674c3c2e6a00fabafd73abeea4250e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/webignition/php-dom-element-identifier/zipball/de79797da971007086c5b64fd5018297661dd6e8",
-                "reference": "de79797da971007086c5b64fd5018297661dd6e8",
+                "url": "https://api.github.com/repos/webignition/php-dom-element-identifier/zipball/d5917717c0674c3c2e6a00fabafd73abeea4250e",
+                "reference": "d5917717c0674c3c2e6a00fabafd73abeea4250e",
                 "shasum": ""
             },
             "require": {
@@ -87,7 +87,7 @@
                 }
             ],
             "homepage": "https://github.com/webignition/php-dom-element-identifier",
-            "time": "2019-12-29T19:40:26+00:00"
+            "time": "2019-12-30T11:28:14+00:00"
         },
         {
             "name": "webignition/php-dom-element-locator",
