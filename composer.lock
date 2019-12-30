@@ -4,50 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "57ec88ac52b73e33939f8650105d6b07",
+    "content-hash": "850f03ac00e21213c4ad670555e4ae85",
     "packages": [
-        {
-            "name": "webignition/basil-dom-identifier",
-            "version": "0.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/webignition/php-dom-identifier.git",
-                "reference": "27ff1fbf980074bb1ac4dd4f81c050a41dff7eb2"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/webignition/php-dom-identifier/zipball/27ff1fbf980074bb1ac4dd4f81c050a41dff7eb2",
-                "reference": "27ff1fbf980074bb1ac4dd4f81c050a41dff7eb2",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=7.2",
-                "webignition/php-dom-element-locator": ">=0.2,<1"
-            },
-            "require-dev": {
-                "phpstan/phpstan": "^0.12",
-                "phpunit/phpunit": "~8.0",
-                "squizlabs/php_codesniffer": "3.*"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "webignition\\BasilDomIdentifier\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Jon Cram",
-                    "email": "webignition@gmail.com"
-                }
-            ],
-            "homepage": "https://github.com/webignition/basil-dom-identifier",
-            "time": "2019-12-29T18:46:42+00:00"
-        },
         {
             "name": "webignition/basil-identifier-analyser",
             "version": "0.2",
@@ -1882,7 +1840,8 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php": ">=7.2"
+        "php": ">=7.2",
+        "ext-mbstring": "*"
     },
     "platform-dev": []
 }
