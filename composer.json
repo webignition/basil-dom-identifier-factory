@@ -34,6 +34,7 @@
     },
     "require": {
         "php": ">=7.2",
+        "ext-mbstring": "*",
         "webignition/basil-dom-identifier": ">=0.2,<1",
         "webignition/basil-identifier-analyser": ">=0.2,<1",
         "webignition/php-dom-element-identifier": ">=0.4,<1",
