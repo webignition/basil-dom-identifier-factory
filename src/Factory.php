@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace webignition\BasilDomIdentifierFactory;
 
 use webignition\BasilDomIdentifier\DomIdentifier;
-use webignition\BasilDomIdentifierFactory\Extractor\DescendantExtractor;
-use webignition\BasilDomIdentifierFactory\Extractor\PageElementIdentifierExtractor;
+use webignition\BasilDomIdentifierFactory\Extractor\DescendantIdentifierExtractor;
+use webignition\BasilDomIdentifierFactory\Extractor\ElementIdentifierExtractor;
 use webignition\BasilIdentifierAnalyser\IdentifierTypeAnalyser;
 use webignition\QuotedStringValueExtractor\QuotedStringValueExtractor;
 
@@ -28,8 +28,8 @@ class Factory
     private $quotedStringValueExtractor;
 
     public function __construct(
-        PageElementIdentifierExtractor $pageElementIdentifierExtractor,
-        DescendantExtractor $descendantExtractor,
+        ElementIdentifierExtractor $pageElementIdentifierExtractor,
+        DescendantIdentifierExtractor $descendantExtractor,
         IdentifierTypeAnalyser $identifierTypeAnalyser,
         QuotedStringValueExtractor $quotedStringValueExtractor
     ) {
@@ -42,8 +42,8 @@ class Factory
     public static function createFactory(): Factory
     {
         return new Factory(
-            PageElementIdentifierExtractor::createExtractor(),
-            DescendantExtractor::createExtractor(),
+            ElementIdentifierExtractor::createExtractor(),
+            DescendantIdentifierExtractor::createExtractor(),
             new IdentifierTypeAnalyser(),
             QuotedStringValueExtractor::createExtractor()
         );

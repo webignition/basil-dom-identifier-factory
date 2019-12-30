@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace webignition\BasilDomIdentifierFactory\Tests\Unit\Extractor;
 
-use webignition\BasilDomIdentifierFactory\Extractor\DescendantExtractor;
+use webignition\BasilDomIdentifierFactory\Extractor\DescendantIdentifierExtractor;
 
-class DescendantExtractorTest extends \PHPUnit\Framework\TestCase
+class DescendantIdentifierExtractorTest extends \PHPUnit\Framework\TestCase
 {
     /**
-     * @var DescendantExtractor
+     * @var DescendantIdentifierExtractor
      */
     private $extractor;
 
@@ -17,7 +17,7 @@ class DescendantExtractorTest extends \PHPUnit\Framework\TestCase
     {
         parent::setUp();
 
-        $this->extractor = DescendantExtractor::createExtractor();
+        $this->extractor = DescendantIdentifierExtractor::createExtractor();
     }
 
     /**

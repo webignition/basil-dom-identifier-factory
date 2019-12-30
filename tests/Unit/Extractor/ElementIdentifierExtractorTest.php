@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace webignition\BasilDomIdentifierFactory\Tests\Unit\Extractor;
 
-use webignition\BasilDomIdentifierFactory\Extractor\PageElementIdentifierExtractor;
+use webignition\BasilDomIdentifierFactory\Extractor\ElementIdentifierExtractor;
 
-class PageElementIdentifierExtractorTest extends \PHPUnit\Framework\TestCase
+class ElementIdentifierExtractorTest extends \PHPUnit\Framework\TestCase
 {
     /**
-     * @var PageElementIdentifierExtractor
+     * @var ElementIdentifierExtractor
      */
     private $extractor;
 
@@ -17,7 +17,7 @@ class PageElementIdentifierExtractorTest extends \PHPUnit\Framework\TestCase
     {
         parent::setUp();
 
-        $this->extractor = new PageElementIdentifierExtractor();
+        $this->extractor = new ElementIdentifierExtractor();
     }
 
     /**
