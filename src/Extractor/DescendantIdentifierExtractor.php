@@ -4,27 +4,27 @@ declare(strict_types=1);
 
 namespace webignition\BasilDomIdentifierFactory\Extractor;
 
-class DescendantExtractor
+class DescendantIdentifierExtractor
 {
     private const PARENT_PREFIX = '{{ ';
     private const PARENT_SUFFIX = ' }}';
     private const PARENT_MATCH_LENGTH = 3;
 
-    private $pageElementIdentifierExtractor;
+    private $elementIdentifierExtractor;
 
-    public function __construct(PageElementIdentifierExtractor $pageElementIdentifierExtractor)
+    public function __construct(ElementIdentifierExtractor $pageElementIdentifierExtractor)
     {
-        $this->pageElementIdentifierExtractor = $pageElementIdentifierExtractor;
+        $this->elementIdentifierExtractor = $pageElementIdentifierExtractor;
     }
 
-    public static function createExtractor(): DescendantExtractor
+    public static function createExtractor(): DescendantIdentifierExtractor
     {
-        return new DescendantExtractor(
-            PageElementIdentifierExtractor::createExtractor()
+        return new DescendantIdentifierExtractor(
+            ElementIdentifierExtractor::createExtractor()
         );
     }
 
-    public function extract(string $string): ?string
+    public function extractIdentifier(string $string): ?string
     {
         $parentIdentifier = $this->extractParentIdentifier($string);
         if (null === $parentIdentifier) {
@@ -71,7 +71,7 @@ class DescendantExtractor
         $parentReference = '{{ ' . $parentIdentifier . ' }}';
 
         $childReference = mb_substr($string, mb_strlen($parentReference) + 1);
-        $childIdentifier = $this->pageElementIdentifierExtractor->extractIdentifierString($childReference);
+        $childIdentifier = $this->elementIdentifierExtractor->extractIdentifier($childReference);
 
         if (null === $childIdentifier) {
             return null;
@@ -86,7 +86,7 @@ class DescendantExtractor
             return true;
         }
 
-        if (null !== $this->pageElementIdentifierExtractor->extractIdentifierString($string)) {
+        if (null !== $this->elementIdentifierExtractor->extractIdentifier($string)) {
             return true;
         }
 

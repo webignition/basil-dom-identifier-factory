@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace webignition\BasilDomIdentifierFactory\Tests\Unit\Extractor;
 
-use webignition\BasilDomIdentifierFactory\Extractor\DescendantExtractor;
+use webignition\BasilDomIdentifierFactory\Extractor\DescendantIdentifierExtractor;
 
-class DescendantExtractorTest extends \PHPUnit\Framework\TestCase
+class DescendantIdentifierExtractorTest extends \PHPUnit\Framework\TestCase
 {
     /**
-     * @var DescendantExtractor
+     * @var DescendantIdentifierExtractor
      */
     private $extractor;
 
@@ -17,15 +17,15 @@ class DescendantExtractorTest extends \PHPUnit\Framework\TestCase
     {
         parent::setUp();
 
-        $this->extractor = DescendantExtractor::createExtractor();
+        $this->extractor = DescendantIdentifierExtractor::createExtractor();
     }
 
     /**
      * @dataProvider returnsEmptyValueDataProvider
      */
-    public function testExtractReturnsEmptyValue(string $string)
+    public function testExtractIdentifierReturnsEmptyValue(string $string)
     {
-        $this->assertNull($this->extractor->extract($string));
+        $this->assertNull($this->extractor->extractIdentifier($string));
     }
 
     public function returnsEmptyValueDataProvider(): array
@@ -55,9 +55,9 @@ class DescendantExtractorTest extends \PHPUnit\Framework\TestCase
     /**
      * @dataProvider descendantIdentifierStringDataProvider
      */
-    public function testExtractReturnsString(string $string, string $expectedIdentifierString)
+    public function testExtractIdentifierReturnsString(string $string, string $expectedIdentifierString)
     {
-        $identifierString = $this->extractor->extract($string);
+        $identifierString = $this->extractor->extractIdentifier($string);
 
         $this->assertSame($expectedIdentifierString, $identifierString);
     }

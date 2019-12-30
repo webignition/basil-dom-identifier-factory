@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace webignition\BasilDomIdentifierFactory\Extractor;
 
-class PageElementIdentifierExtractor
+class ElementIdentifierExtractor
 {
     private const VARIABLE_START_CHARACTER = '$';
     private const LOCATOR_DELIMITER = '"';
@@ -14,12 +14,12 @@ class PageElementIdentifierExtractor
     private const POSITION_FIRST = 'first';
     private const POSITION_LAST = 'last';
 
-    public static function createExtractor(): PageElementIdentifierExtractor
+    public static function createExtractor(): ElementIdentifierExtractor
     {
-        return new PageElementIdentifierExtractor();
+        return new ElementIdentifierExtractor();
     }
 
-    public function extractIdentifierString(string $string): ?string
+    public function extractIdentifier(string $string): ?string
     {
         if (!$this->handles($string)) {
             return null;
