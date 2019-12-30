@@ -36,6 +36,7 @@
         "php": ">=7.2",
         "webignition/basil-dom-identifier": ">=0.2,<1",
         "webignition/basil-identifier-analyser": ">=0.2,<1",
+        "webignition/php-dom-element-identifier": ">=0.4,<1",
         "webignition/quoted-string-value-extractor": ">=0.1,<1"
     },
     "require-dev": {
