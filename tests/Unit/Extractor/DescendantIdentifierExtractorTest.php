@@ -40,17 +40,9 @@ class DescendantIdentifierExtractorTest extends \PHPUnit\Framework\TestCase
             'invalid parent identifier' => [
                 'string' => '$"{{ .parent }} .child"',
             ],
-//            'invalid child identifier' => [
-//                'string' => '{{ $".parent" }} .child',
-//                'string' => '$"{{ $".parent" }} .child"',
-//            ],
             'lacking parent suffix' => [
-//              'string' => '{{ $".parent" .child',
-                'string' => '$"{{ $".parent"  .child"',
+                'string' => '$"{{ $".parent" .child"',
             ],
-//            'parent prefix only' => [
-//                'string' => '{{ ',
-//            ],
         ];
     }
 

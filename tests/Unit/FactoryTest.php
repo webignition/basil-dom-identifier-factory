@@ -129,42 +129,42 @@ class FactoryTest extends \PHPUnit\Framework\TestCase
     public function descendantIdentifierDataProvider(): array
     {
         return [
-            'direct descendant; css parent, css child' => [
-                'identifierString' => '{{ $".parent" }} $".child"',
+            'css parent > css child' => [
+                'identifierString' => '$"{{ $".parent" }} .child"',
                 'expectedIdentifier' => (new ElementIdentifier('.child'))
                     ->withParentIdentifier(new ElementIdentifier('.parent')),
             ],
-            'direct descendant; css parent, xpath child' => [
-                'identifierString' => '{{ $".parent" }} $"/child"',
+            'css parent > xpath child' => [
+                'identifierString' => '$"{{ $".parent" }} /child"',
                 'expectedIdentifier' => (new ElementIdentifier('/child'))
                     ->withParentIdentifier(new ElementIdentifier('.parent')),
             ],
-            'direct descendant; xpath parent, css child' => [
-                'identifierString' => '{{ $"/parent" }} $".child"',
+            'xpath parent > css child' => [
+                'identifierString' => '$"{{ $"/parent" }} .child"',
                 'expectedIdentifier' => (new ElementIdentifier('.child'))
                     ->withParentIdentifier(new ElementIdentifier('/parent')),
             ],
-            'direct descendant; xpath parent, xpath child' => [
-                'identifierString' => '{{ $"/parent" }} $"/child"',
+            'xpath parent > xpath child' => [
+                'identifierString' => '$"{{ $"/parent" }} /child"',
                 'expectedIdentifier' => (new ElementIdentifier('/child'))
                     ->withParentIdentifier(new ElementIdentifier('/parent')),
             ],
-            'indirect descendant' => [
-                'string' => '{{ {{ $".inner-parent" }} $".inner-child" }} $".child"',
+            'grandparent > parent > child' => [
+                'string' => '$"{{ $"{{ $".grandparent" }} .parent" }} .child"',
                 'expectedIdentifier' => (new ElementIdentifier('.child'))
                     ->withParentIdentifier(
-                        (new ElementIdentifier('.inner-child'))
-                            ->withParentIdentifier(new ElementIdentifier('.inner-parent'))
+                        (new ElementIdentifier('.parent'))
+                            ->withParentIdentifier(new ElementIdentifier('.grandparent'))
                     ),
             ],
-            'indirectly indirect descendant' => [
-                'string' => '{{ {{ {{ $".inner-inner-parent" }} $".inner-inner-child" }} $".inner-child" }} $".child"',
+            'great-grandparent > grandparent > parent > child' => [
+                'string' => '$"{{ $"{{ $"{{ $".great-grandparent" }} .grandparent }} .parent" }} .child"',
                 'expectedIdentifier' => (new ElementIdentifier('.child'))
                     ->withParentIdentifier(
-                        (new ElementIdentifier('.inner-child'))
+                        (new ElementIdentifier('.parent'))
                             ->withParentIdentifier(
-                                (new ElementIdentifier('.inner-inner-child'))
-                                    ->withParentIdentifier(new ElementIdentifier('.inner-inner-parent'))
+                                (new ElementIdentifier('.grandparent'))
+                                    ->withParentIdentifier(new ElementIdentifier('.great-grandparent'))
                             )
                     ),
             ],
