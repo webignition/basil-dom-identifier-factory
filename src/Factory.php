@@ -53,14 +53,14 @@ class Factory
 
     public function createFromIdentifierString(string $identifierString): ?ElementIdentifierInterface
     {
-        $pageElementIdentifier = $this->pageElementIdentifierExtractor->extractIdentifier($identifierString);
-        if (is_string($pageElementIdentifier)) {
-            return $this->createFromPageElementIdentifierString($pageElementIdentifier);
-        }
-
         $descendantIdentifier = $this->descendantExtractor->extractIdentifier($identifierString);
         if (is_string($descendantIdentifier)) {
             return $this->createFromDescendantIdentifierString($descendantIdentifier);
+        }
+
+        $pageElementIdentifier = $this->pageElementIdentifierExtractor->extractIdentifier($identifierString);
+        if (is_string($pageElementIdentifier)) {
+            return $this->createFromPageElementIdentifierString($pageElementIdentifier);
         }
 
         return null;

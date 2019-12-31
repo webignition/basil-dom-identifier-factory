@@ -6,9 +6,8 @@ namespace webignition\BasilDomIdentifierFactory\Extractor;
 
 class DescendantIdentifierExtractor
 {
-    private const PARENT_PREFIX = '{{ ';
+    private const PARENT_PREFIX = '$"{{ ';
     private const PARENT_SUFFIX = ' }}';
-    private const PARENT_MATCH_LENGTH = 3;
 
     private $elementIdentifierExtractor;
 
@@ -36,7 +35,9 @@ class DescendantIdentifierExtractor
             return null;
         }
 
-        return '{{ ' . $parentIdentifier . ' }}' . ' ' . $childIdentifier;
+        $childReference = ltrim($childIdentifier, '$"');
+
+        return self::PARENT_PREFIX . $parentIdentifier . self::PARENT_SUFFIX . ' ' . $childReference;
     }
 
     public function extractParentIdentifier(string $string): ?string
@@ -63,16 +64,15 @@ class DescendantIdentifierExtractor
     public function extractChildIdentifier(string $string): ?string
     {
         $parentIdentifier = $this->extractParentIdentifier($string);
-
         if (null === $parentIdentifier) {
             return null;
         }
 
-        $parentReference = '{{ ' . $parentIdentifier . ' }}';
+        $parentReference = self::PARENT_PREFIX . $parentIdentifier . self::PARENT_SUFFIX;
+        $childReference =  mb_substr($string, mb_strlen($parentReference) + 1);
+        $childReferenceAsIdentifier =  '$"' . $childReference;
 
-        $childReference = mb_substr($string, mb_strlen($parentReference) + 1);
-        $childIdentifier = $this->elementIdentifierExtractor->extractIdentifier($childReference);
-
+        $childIdentifier = $this->elementIdentifierExtractor->extractIdentifier($childReferenceAsIdentifier);
         if (null === $childIdentifier) {
             return null;
         }
@@ -97,22 +97,26 @@ class DescendantIdentifierExtractor
     {
         $characters = preg_split('//u', $string, -1, PREG_SPLIT_NO_EMPTY);
 
-        if (false === $characters || ['{', '{', ' '] === $characters) {
+        if (false === $characters || ['$', '"', '{', '{', ' '] === $characters) {
             return null;
         }
 
         $position = null;
         $depth = 0;
 
-        $previousCharacters = implode('', array_slice($characters, 0, self::PARENT_MATCH_LENGTH));
-        $characters = array_slice($characters, self::PARENT_MATCH_LENGTH);
+        $parentPrefixLength = strlen(self::PARENT_PREFIX);
+        $parentSuffixLength = strlen(self::PARENT_SUFFIX);
+
+        $prefixPreviousCharacters = implode('', array_slice($characters, 0, $parentPrefixLength));
+        $suffixPreviousCharacters = mb_substr($prefixPreviousCharacters, 0, $parentSuffixLength);
+        $characters = array_slice($characters, $parentPrefixLength);
 
         foreach ($characters as $index => $character) {
-            if (self::PARENT_PREFIX === $previousCharacters) {
+            if (self::PARENT_PREFIX === $prefixPreviousCharacters) {
                 $depth++;
             }
 
-            if (self::PARENT_SUFFIX === $previousCharacters) {
+            if (self::PARENT_SUFFIX === $suffixPreviousCharacters) {
                 $depth--;
             }
 
@@ -120,8 +124,9 @@ class DescendantIdentifierExtractor
                 return $index;
             }
 
-            $previousCharacters .= $character;
-            $previousCharacters = mb_substr($previousCharacters, 1);
+            $prefixPreviousCharacters .= $character;
+            $prefixPreviousCharacters = mb_substr($prefixPreviousCharacters, 1);
+            $suffixPreviousCharacters = mb_substr($prefixPreviousCharacters, 0, $parentSuffixLength);
         }
 
         return null;
@@ -129,10 +134,13 @@ class DescendantIdentifierExtractor
 
     private function unwrap(string $wrappedIdentifier): string
     {
+        $prefixLength = strlen(self::PARENT_PREFIX);
+        $suffixLength = strlen(self::PARENT_SUFFIX);
+
         return mb_substr(
             $wrappedIdentifier,
-            self::PARENT_MATCH_LENGTH,
-            mb_strlen($wrappedIdentifier) - self::PARENT_MATCH_LENGTH - self::PARENT_MATCH_LENGTH
+            $prefixLength,
+            mb_strlen($wrappedIdentifier) - $prefixLength - $suffixLength
         );
     }
 }
