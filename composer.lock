@@ -4,49 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3c690560a0639fbb68c3e5f2ec2b9841",
+    "content-hash": "e7bf4ebe287cb970f85e8ac2a608bc6c",
     "packages": [
-        {
-            "name": "webignition/basil-identifier-analyser",
-            "version": "0.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/webignition/basil-identifier-analyser.git",
-                "reference": "c7e941bfd68caf26745642113463c473bbfeafa6"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/webignition/basil-identifier-analyser/zipball/c7e941bfd68caf26745642113463c473bbfeafa6",
-                "reference": "c7e941bfd68caf26745642113463c473bbfeafa6",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=7.2"
-            },
-            "require-dev": {
-                "phpstan/phpstan": "^0.12",
-                "phpunit/phpunit": "~8.0",
-                "squizlabs/php_codesniffer": "3.*"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "webignition\\BasilIdentifierAnalyser\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Jon Cram",
-                    "email": "webignition@gmail.com"
-                }
-            ],
-            "homepage": "https://github.com/webignition/basil-identifier-analyser",
-            "time": "2019-12-17T10:28:56+00:00"
-        },
         {
             "name": "webignition/php-dom-element-identifier",
             "version": "0.6",
