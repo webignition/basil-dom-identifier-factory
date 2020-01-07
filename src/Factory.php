@@ -6,7 +6,6 @@ namespace webignition\BasilDomIdentifierFactory;
 
 use webignition\BasilDomIdentifierFactory\Extractor\DescendantIdentifierExtractor;
 use webignition\BasilDomIdentifierFactory\Extractor\ElementIdentifierExtractor;
-use webignition\BasilIdentifierAnalyser\IdentifierTypeAnalyser;
 use webignition\DomElementIdentifier\AttributeIdentifier;
 use webignition\DomElementIdentifier\ElementIdentifier;
 use webignition\DomElementIdentifier\ElementIdentifierInterface;
@@ -26,18 +25,15 @@ class Factory
 
     private $pageElementIdentifierExtractor;
     private $descendantExtractor;
-    private $identifierTypeAnalyser;
     private $quotedStringValueExtractor;
 
     public function __construct(
         ElementIdentifierExtractor $pageElementIdentifierExtractor,
         DescendantIdentifierExtractor $descendantExtractor,
-        IdentifierTypeAnalyser $identifierTypeAnalyser,
         QuotedStringValueExtractor $quotedStringValueExtractor
     ) {
         $this->pageElementIdentifierExtractor = $pageElementIdentifierExtractor;
         $this->descendantExtractor = $descendantExtractor;
-        $this->identifierTypeAnalyser = $identifierTypeAnalyser;
         $this->quotedStringValueExtractor = $quotedStringValueExtractor;
     }
 
@@ -46,7 +42,6 @@ class Factory
         return new Factory(
             ElementIdentifierExtractor::createExtractor(),
             DescendantIdentifierExtractor::createExtractor(),
-            new IdentifierTypeAnalyser(),
             QuotedStringValueExtractor::createExtractor()
         );
     }
@@ -71,7 +66,7 @@ class Factory
         $elementIdentifier = $identifierString;
         $attributeName = '';
 
-        if ($this->identifierTypeAnalyser->isAttributeIdentifier($identifierString)) {
+        if ($this->isAttributeIdentifierMatch($identifierString)) {
             $attributeName = $this->findAttributeName($identifierString);
             $elementIdentifier = $this->findElementIdentifier($identifierString, $attributeName);
         }
@@ -150,5 +145,22 @@ class Factory
         $lastPositionDelimiterPosition = (int) mb_strrpos($elementIdentifier, ':');
 
         return mb_substr($elementIdentifier, 0, $lastPositionDelimiterPosition - 1);
+    }
+
+    private function isAttributeIdentifierMatch(string $elementIdentifier): bool
+    {
+        if ('' === $elementIdentifier) {
+            return false;
+        }
+
+        if (preg_match(self::POSITION_REGEX, $elementIdentifier) > 0) {
+            return false;
+        }
+
+        if (preg_match('/\$"\.[^.]+$/', $elementIdentifier) > 0) {
+            return false;
+        }
+
+        return preg_match('/\.(.+)$/', $elementIdentifier) > 0;
     }
 }
