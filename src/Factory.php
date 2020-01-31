@@ -18,6 +18,13 @@ class Factory
     private const POSITION_PATTERN = ':(-?[0-9]+|first|last)';
     private const POSITION_REGEX = '/' . self::POSITION_PATTERN . '$/';
 
+    /**
+     * Pattern for characters not allowed in an html attribute name
+     *
+     * @see https://html.spec.whatwg.org/multipage/syntax.html#attributes-2
+     */
+    private const DISALLOWED_ATTRIBUTE_NAME_CHARACTERS_PATTERN = '[^ "\'>\/=]';
+
     private const POSITION_LABEL_MAP = [
         self::POSITION_FIRST => 1,
         self::POSITION_LAST => -1,
@@ -161,6 +168,8 @@ class Factory
             return false;
         }
 
-        return preg_match('/\.(.+)$/', $elementIdentifier) > 0;
+        $endingWithAttributeRegex = '/\.(' . self::DISALLOWED_ATTRIBUTE_NAME_CHARACTERS_PATTERN . '+)$/';
+
+        return preg_match($endingWithAttributeRegex, $elementIdentifier) > 0;
     }
 }

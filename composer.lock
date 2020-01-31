@@ -4,23 +4,24 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e7bf4ebe287cb970f85e8ac2a608bc6c",
+    "content-hash": "88a161f8f8764aed9a53f6dca59d285d",
     "packages": [
         {
             "name": "webignition/php-dom-element-identifier",
-            "version": "0.6",
+            "version": "0.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/webignition/php-dom-element-identifier.git",
-                "reference": "d5917717c0674c3c2e6a00fabafd73abeea4250e"
+                "reference": "fcb502c1fc4377a50172d108c63444db86eca188"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/webignition/php-dom-element-identifier/zipball/d5917717c0674c3c2e6a00fabafd73abeea4250e",
-                "reference": "d5917717c0674c3c2e6a00fabafd73abeea4250e",
+                "url": "https://api.github.com/repos/webignition/php-dom-element-identifier/zipball/fcb502c1fc4377a50172d108c63444db86eca188",
+                "reference": "fcb502c1fc4377a50172d108c63444db86eca188",
                 "shasum": ""
             },
             "require": {
+                "ext-json": "*",
                 "php": ">=7.2",
                 "webignition/php-dom-element-locator": ">=0.2,<1"
             },
@@ -46,7 +47,7 @@
                 }
             ],
             "homepage": "https://github.com/webignition/php-dom-element-identifier",
-            "time": "2019-12-30T11:28:14+00:00"
+            "time": "2019-12-31T08:39:47+00:00"
         },
         {
             "name": "webignition/php-dom-element-locator",

@@ -123,6 +123,62 @@ class FactoryTest extends \PHPUnit\Framework\TestCase
                 'identifierString' => '$".listed-item":last',
                 'expectedIdentifier' => new ElementIdentifier('.listed-item', -1),
             ],
+            'css attribute-based selector: has attribute' => [
+                'identifierString' => '$".selector[attribute]"',
+                'expectedIdentifier' => new ElementIdentifier('.selector[attribute]'),
+            ],
+            'css attribute-based selector: attribute equals, unquoted' => [
+                'identifierString' => '$".selector[attribute=value]"',
+                'expectedIdentifier' => new ElementIdentifier('.selector[attribute=value]'),
+            ],
+            'css attribute-based selector: attribute equals, quoted' => [
+                'identifierString' => '$".selector[attribute=\"value\"]"',
+                'expectedIdentifier' => new ElementIdentifier('.selector[attribute="value"]'),
+            ],
+            'css attribute-based selector: attribute equals, url value' => [
+                'identifierString' => '$".selector[attribute=http://example.com]"',
+                'expectedIdentifier' => new ElementIdentifier('.selector[attribute=http://example.com]'),
+            ],
+            'css attribute-based selector: attribute list contains' => [
+                'identifierString' => '$".selector[attribute~=value]"',
+                'expectedIdentifier' => new ElementIdentifier('.selector[attribute~=value]'),
+            ],
+            'css attribute-based selector: attribute list contains, url value' => [
+                'identifierString' => '$".selector[attribute~=http://example.com]"',
+                'expectedIdentifier' => new ElementIdentifier('.selector[attribute~=http://example.com]'),
+            ],
+            'css attribute-based selector: attribute equals or hyphen equals' => [
+                'identifierString' => '$".selector[attribute|=value]"',
+                'expectedIdentifier' => new ElementIdentifier('.selector[attribute|=value]'),
+            ],
+            'css attribute-based selector: attribute equals or hyphen equals, url value' => [
+                'identifierString' => '$".selector[attribute|=http://example.com]"',
+                'expectedIdentifier' => new ElementIdentifier('.selector[attribute|=http://example.com]'),
+            ],
+            'css attribute-based selector: attribute prefixed by' => [
+                'identifierString' => '$".selector[attribute^=value]"',
+                'expectedIdentifier' => new ElementIdentifier('.selector[attribute^=value]'),
+            ],
+            'css attribute-based selector: attribute prefixed by, url value' => [
+                'identifierString' => '$".selector[attribute^=http://example.com]"',
+                'expectedIdentifier' => new ElementIdentifier('.selector[attribute^=http://example.com]'),
+            ],
+            'css attribute-based selector: attribute ends with' => [
+                'identifierString' => '$".selector[attribute$=value]"',
+                'expectedIdentifier' => new ElementIdentifier('.selector[attribute$=value]'),
+            ],
+            'css attribute-based selector: attribute ends with, url value' => [
+                'identifierString' => '$".selector[attribute$=http://example.com]"',
+                'expectedIdentifier' => new ElementIdentifier('.selector[attribute$=http://example.com]'),
+            ],
+            'css attribute-based selector: attribute contains' => [
+                'identifierString' => '$".selector[attribute*=value]"',
+                'expectedIdentifier' => new ElementIdentifier('.selector[attribute*=value]'),
+            ],
+            'css attribute-based selector: attribute contains, url value' => [
+                'identifierString' => '$".selector[attribute*=http://example.com]"',
+                'expectedIdentifier' => new ElementIdentifier('.selector[attribute*=http://example.com]'),
+            ],
         ];
     }
 
