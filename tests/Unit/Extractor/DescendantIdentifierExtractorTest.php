@@ -38,10 +38,10 @@ class DescendantIdentifierExtractorTest extends \PHPUnit\Framework\TestCase
                 'string' => '$elements.element_name',
             ],
             'invalid parent identifier' => [
-                'string' => '$"{{ .parent }} .child"',
+                'string' => '$".parent >> $".child"',
             ],
-            'lacking parent suffix' => [
-                'string' => '$"{{ $".parent" .child"',
+            'invalid child identifier' => [
+                'string' => '$".parent" >> ".child"',
             ],
         ];
     }
@@ -59,30 +59,29 @@ class DescendantIdentifierExtractorTest extends \PHPUnit\Framework\TestCase
     public function descendantIdentifierStringDataProvider(): array
     {
         $dataSets = [
-            'parent > child' => [
-                'string' => '$"{{ $".parent" }} .child"',
-                'expectedIdentifierString' => '$"{{ $".parent" }} .child"',
+            'parent >> child' => [
+                'string' => '$".parent" >> $".child"',
+                'expectedIdentifierString' => '$".parent" >> $".child"',
             ],
-            'parent > child:position' => [
-                'string' => '$"{{ $".parent" }} .child":3',
-                'expectedIdentifierString' => '$"{{ $".parent" }} .child":3',
+            'parent >> child:position' => [
+                'string' => '$".parent" >> $".child":3',
+                'expectedIdentifierString' => '$".parent" >> $".child":3',
             ],
-            'parent > child.attribute' => [
-                'string' => '$"{{ $".parent" }} .child".attribute_name',
-                'expectedIdentifierString' => '$"{{ $".parent" }} .child".attribute_name',
+            'parent >> child.attribute' => [
+                'string' => '$".parent" >> $".child".attribute_name',
+                'expectedIdentifierString' => '$".parent" >> $".child".attribute_name',
             ],
-            'parent > child:position.attribute' => [
-                'string' => '$"{{ $".parent" }} .child":5.attribute_name',
-                'expectedIdentifierString' => '$"{{ $".parent" }} .child":5.attribute_name',
+            'parent >> child:position.attribute' => [
+                'string' => '$".parent" >> $".child":5.attribute_name',
+                'expectedIdentifierString' => '$".parent" >> $".child":5.attribute_name',
             ],
-            'grandparent > parent > child' => [
-                'string' => '$"{{ $"{{ $".grandparent" }} .parent" }} .child"',
-                'expectedIdentifierString' => '$"{{ $"{{ $".grandparent" }} .parent" }} .child"',
+            'grandparent >> parent >> child' => [
+                'string' => '$".grandparent" >> $".parent" >> $".child"',
+                'expectedIdentifierString' => '$".grandparent" >> $".parent" >> $".child"',
             ],
-            'great-grandparent > grandparent > parent > child' => [
-                'string' => '$"{{ $"{{ $"{{ $".great-grandparent" }} .grandparent }} .parent" }} .child"',
-                'expectedIdentifierString' =>
-                    '$"{{ $"{{ $"{{ $".great-grandparent" }} .grandparent }} .parent" }} .child"',
+            'great-grandparent >> grandparent >> parent >> child' => [
+                'string' => '$".great-grandparent" >> $".grandparent >> $".parent" >> $".child"',
+                'expectedIdentifierString' => '$".great-grandparent" >> $".grandparent >> $".parent" >> $".child"',
             ],
         ];
 
@@ -114,13 +113,7 @@ class DescendantIdentifierExtractorTest extends \PHPUnit\Framework\TestCase
                 'string' => '$elements.element_name',
             ],
             'invalid parent identifier' => [
-                'string' => '{{ .parent }} $".child"',
-            ],
-            'lacking parent suffix' => [
-                'string' => '{{ $".parent" .child',
-            ],
-            'parent prefix only' => [
-                'string' => '{{ ',
+                'string' => '$".parent >> $".child"',
             ],
         ];
     }
@@ -138,29 +131,29 @@ class DescendantIdentifierExtractorTest extends \PHPUnit\Framework\TestCase
     public function extractParentIdentifierDataProvider(): array
     {
         return [
-            'parent > child' => [
-                'string' => '$"{{ $".parent" }} .child"',
-                'expectedParentIdentifier' => '$".parent"',
+            'parent >> child' => [
+                'string' => '$".parent" >> $".child"',
+                'expectedIdentifierString' => '$".parent"',
             ],
-            'parent > child:position' => [
-                'string' => '$"{{ $".parent" }} .child":3',
-                'expectedParentIdentifier' => '$".parent"',
+            'parent >> child:position' => [
+                'string' => '$".parent" >> $".child":3',
+                'expectedIdentifierString' => '$".parent"',
             ],
-            'parent > child.attribute' => [
-                'string' => '$"{{ $".parent" }} .child".attribute_name',
-                'expectedParentIdentifier' => '$".parent"',
+            'parent >> child.attribute' => [
+                'string' => '$".parent" >> $".child".attribute_name',
+                'expectedIdentifierString' => '$".parent"',
             ],
-            'parent > child:position.attribute' => [
-                'string' => '$"{{ $".parent" }} .child":5.attribute_name',
-                'expectedParentIdentifier' => '$".parent"',
+            'parent >> child:position.attribute' => [
+                'string' => '$".parent" >> $".child":5.attribute_name',
+                'expectedIdentifierString' => '$".parent"',
             ],
-            'grandparent > parent > child' => [
-                'string' => '$"{{ $"{{ $".grandparent" }} .parent" }} .child"',
-                'expectedParentIdentifier' => '$"{{ $".grandparent" }} .parent"',
+            'grandparent >> parent >> child' => [
+                'string' => '$".grandparent" >> $".parent" >> $".child"',
+                'expectedIdentifierString' => '$".grandparent" >> $".parent"',
             ],
-            'great-grandparent > grandparent > parent > child' => [
-                'string' => '$"{{ $"{{ $"{{ $".great-grandparent" }} .grandparent }} .parent" }} .child"',
-                'expectedParentIdentifier' => '$"{{ $"{{ $".great-grandparent" }} .grandparent }} .parent"',
+            'great-grandparent >> grandparent >> parent >> child' => [
+                'string' => '$".great-grandparent" >> $".grandparent >> $".parent" >> $".child"',
+                'expectedIdentifierString' => '$".great-grandparent" >> $".grandparent >> $".parent"',
             ],
         ];
     }
@@ -183,16 +176,10 @@ class DescendantIdentifierExtractorTest extends \PHPUnit\Framework\TestCase
                 'string' => '$elements.element_name',
             ],
             'invalid parent identifier' => [
-                'string' => '{{ .parent }} $".child"',
+                'string' => '$".parent >> $".child"',
             ],
             'invalid child identifier' => [
-                'string' => '{{ $".parent" }} .child',
-            ],
-            'lacking parent suffix' => [
-                'string' => '{{ $".parent" .child',
-            ],
-            'parent prefix only' => [
-                'string' => '{{ ',
+                'string' => '$".parent" >> ".child"',
             ],
         ];
     }
@@ -210,29 +197,29 @@ class DescendantIdentifierExtractorTest extends \PHPUnit\Framework\TestCase
     public function extractChildIdentifierDataProvider(): array
     {
         return [
-            'parent > child' => [
-                'string' => '$"{{ $".parent" }} .child"',
-                'expectedChildIdentifier' => '$".child"',
+            'parent >> child' => [
+                'string' => '$".parent" >> $".child"',
+                'expectedIdentifierString' => '$".child"',
             ],
-            'parent > child:position' => [
-                'string' => '$"{{ $".parent" }} .child":3',
-                'expectedChildIdentifier' => '$".child":3',
+            'parent >> child:position' => [
+                'string' => '$".parent" >> $".child":3',
+                'expectedIdentifierString' => '$".child":3',
             ],
-            'parent > child.attribute' => [
-                'string' => '$"{{ $".parent" }} .child".attribute_name',
-                'expectedChildIdentifier' => '$".child".attribute_name',
+            'parent >> child.attribute' => [
+                'string' => '$".parent" >> $".child".attribute_name',
+                'expectedIdentifierString' => '$".child".attribute_name',
             ],
-            'parent > child:position.attribute' => [
-                'string' => '$"{{ $".parent" }} .child":5.attribute_name',
-                'expectedChildIdentifier' => '$".child":5.attribute_name',
+            'parent >> child:position.attribute' => [
+                'string' => '$".parent" >> $".child":5.attribute_name',
+                'expectedIdentifierString' => '$".child":5.attribute_name',
             ],
-            'grandparent > parent > child' => [
-                'string' => '$"{{ $"{{ $".grandparent" }} .parent" }} .child"',
-                'expectedChildIdentifier' => '$".child"',
+            'grandparent >> parent >> child' => [
+                'string' => '$".grandparent" >> $".parent" >> $".child"',
+                'expectedIdentifierString' => '$".child"',
             ],
-            'great-grandparent > grandparent > parent > child' => [
-                'string' => '$"{{ $"{{ $"{{ $".great-grandparent" }} .grandparent }} .parent" }} .child"',
-                'expectedChildIdentifier' => '$".child"',
+            'great-grandparent >> grandparent >> parent >> child' => [
+                'string' => '$".great-grandparent" >> $".grandparent >> $".parent" >> $".child"',
+                'expectedIdentifierString' => '$".child"',
             ],
         ];
     }
