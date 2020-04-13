@@ -6,8 +6,7 @@ namespace webignition\BasilDomIdentifierFactory\Extractor;
 
 class DescendantIdentifierExtractor
 {
-    private const PARENT_PREFIX = '$"{{ ';
-    private const PARENT_SUFFIX = ' }}';
+    private const DESCENDANT_SEPARATOR = ' >> ';
 
     private $elementIdentifierExtractor;
 
@@ -30,35 +29,49 @@ class DescendantIdentifierExtractor
             return null;
         }
 
-        $childIdentifier = $this->extractChildIdentifier($string);
+        $childIdentifier = $this->doExtractChildIdentifier($string, $parentIdentifier);
         if (null === $childIdentifier) {
             return null;
         }
 
-        $childReference = ltrim($childIdentifier, '$"');
-
-        return self::PARENT_PREFIX . $parentIdentifier . self::PARENT_SUFFIX . ' ' . $childReference;
+        return $parentIdentifier . self::DESCENDANT_SEPARATOR . $childIdentifier;
     }
 
     public function extractParentIdentifier(string $string): ?string
     {
-        if (self::PARENT_PREFIX !== substr($string, 0, strlen(self::PARENT_PREFIX))) {
+        $descendantSeparatorLength = strlen(self::DESCENDANT_SEPARATOR);
+
+        $parentIdentifier = '';
+        $remainder = $string;
+
+        $firstIdentifier = $this->elementIdentifierExtractor->extractIdentifier($remainder);
+        if (null === $firstIdentifier) {
             return null;
         }
 
-        $parentSuffixPosition = $this->findParentSuffixPosition($string);
-        if (null === $parentSuffixPosition) {
+        $firstIdentifierLength = strlen($firstIdentifier);
+        $remainder = substr($remainder, $firstIdentifierLength);
+        $remainderStart = substr($remainder, 0, $descendantSeparatorLength);
+
+        if ('' === $remainder) {
             return null;
         }
 
-        $parentReference = mb_substr($string, 0, $parentSuffixPosition + strlen(self::PARENT_SUFFIX));
-        $parentReferenceIdentifier = $this->unwrap($parentReference);
+        while ($remainderStart === self::DESCENDANT_SEPARATOR) {
+            $parentIdentifier .= $firstIdentifier . self::DESCENDANT_SEPARATOR;
+            $remainder = substr($remainder, $descendantSeparatorLength);
 
-        if (false === $this->isParentReference($parentReferenceIdentifier)) {
-            return null;
+            $firstIdentifier = $this->elementIdentifierExtractor->extractIdentifier($remainder);
+            if (null === $firstIdentifier) {
+                return $this->rtrimDescendantSeparator($parentIdentifier);
+            }
+
+            $firstIdentifierLength = strlen($firstIdentifier);
+            $remainder = substr($remainder, $firstIdentifierLength);
+            $remainderStart = substr($remainder, 0, $descendantSeparatorLength);
         }
 
-        return $parentReferenceIdentifier;
+        return $this->rtrimDescendantSeparator($parentIdentifier);
     }
 
     public function extractChildIdentifier(string $string): ?string
@@ -68,11 +81,16 @@ class DescendantIdentifierExtractor
             return null;
         }
 
-        $parentReference = self::PARENT_PREFIX . $parentIdentifier . self::PARENT_SUFFIX;
-        $childReference =  mb_substr($string, mb_strlen($parentReference) + 1);
-        $childReferenceAsIdentifier =  '$"' . $childReference;
+        return $this->doExtractChildIdentifier($string, $parentIdentifier);
+    }
 
-        $childIdentifier = $this->elementIdentifierExtractor->extractIdentifier($childReferenceAsIdentifier);
+    private function doExtractChildIdentifier(string $string, string $parentIdentifier): ?string
+    {
+        $childComponent = substr($string, strlen($parentIdentifier));
+        $childComponent = $this->ltrimDescendantSeparator($childComponent);
+
+
+        $childIdentifier = $this->elementIdentifierExtractor->extractIdentifier($childComponent);
         if (null === $childIdentifier) {
             return null;
         }
@@ -80,67 +98,27 @@ class DescendantIdentifierExtractor
         return $childIdentifier;
     }
 
-    private function isParentReference(string $string): bool
+    private function rtrimDescendantSeparator(string $string): string
     {
-        if (null !== $this->extractParentIdentifier($string)) {
-            return true;
+        $descendantSeparatorLength = strlen(self::DESCENDANT_SEPARATOR);
+        $stringEnd = substr($string, $descendantSeparatorLength * -1);
+
+        if (self::DESCENDANT_SEPARATOR === $stringEnd) {
+            $string = substr($string, 0, strlen($string) - $descendantSeparatorLength);
         }
 
-        if (null !== $this->elementIdentifierExtractor->extractIdentifier($string)) {
-            return true;
-        }
-
-        return false;
+        return $string;
     }
 
-    private function findParentSuffixPosition(string $string): ?int
+    private function ltrimDescendantSeparator(string $string): string
     {
-        $characters = preg_split('//u', $string, -1, PREG_SPLIT_NO_EMPTY);
+        $descendantSeparatorLength = strlen(self::DESCENDANT_SEPARATOR);
+        $stringStart = substr($string, 0, $descendantSeparatorLength);
 
-        if (false === $characters || ['$', '"', '{', '{', ' '] === $characters) {
-            return null;
+        if (self::DESCENDANT_SEPARATOR === $stringStart) {
+            $string = substr($string, $descendantSeparatorLength);
         }
 
-        $position = null;
-        $depth = 0;
-
-        $parentPrefixLength = strlen(self::PARENT_PREFIX);
-        $parentSuffixLength = strlen(self::PARENT_SUFFIX);
-
-        $prefixPreviousCharacters = implode('', array_slice($characters, 0, $parentPrefixLength));
-        $suffixPreviousCharacters = mb_substr($prefixPreviousCharacters, 0, $parentSuffixLength);
-        $characters = array_slice($characters, $parentPrefixLength);
-
-        foreach ($characters as $index => $character) {
-            if (self::PARENT_PREFIX === $prefixPreviousCharacters) {
-                $depth++;
-            }
-
-            if (self::PARENT_SUFFIX === $suffixPreviousCharacters) {
-                $depth--;
-            }
-
-            if ($depth === 0) {
-                return $index;
-            }
-
-            $prefixPreviousCharacters .= $character;
-            $prefixPreviousCharacters = mb_substr($prefixPreviousCharacters, 1);
-            $suffixPreviousCharacters = mb_substr($prefixPreviousCharacters, 0, $parentSuffixLength);
-        }
-
-        return null;
-    }
-
-    private function unwrap(string $wrappedIdentifier): string
-    {
-        $prefixLength = strlen(self::PARENT_PREFIX);
-        $suffixLength = strlen(self::PARENT_SUFFIX);
-
-        return mb_substr(
-            $wrappedIdentifier,
-            $prefixLength,
-            mb_strlen($wrappedIdentifier) - $prefixLength - $suffixLength
-        );
+        return $string;
     }
 }

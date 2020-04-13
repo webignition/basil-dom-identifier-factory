@@ -185,36 +185,36 @@ class FactoryTest extends \PHPUnit\Framework\TestCase
     public function descendantIdentifierDataProvider(): array
     {
         return [
-            'css parent > css child' => [
-                'identifierString' => '$"{{ $".parent" }} .child"',
+            'css parent >> css child' => [
+                'identifierString' => '$".parent" >> $".child"',
                 'expectedIdentifier' => (new ElementIdentifier('.child'))
                     ->withParentIdentifier(new ElementIdentifier('.parent')),
             ],
-            'css parent > xpath child' => [
-                'identifierString' => '$"{{ $".parent" }} /child"',
+            'css parent >> xpath child' => [
+                'identifierString' => '$".parent" >> $"/child"',
                 'expectedIdentifier' => (new ElementIdentifier('/child'))
                     ->withParentIdentifier(new ElementIdentifier('.parent')),
             ],
-            'xpath parent > css child' => [
-                'identifierString' => '$"{{ $"/parent" }} .child"',
+            'xpath parent >> css child' => [
+                'identifierString' => '$"/parent" >> $".child"',
                 'expectedIdentifier' => (new ElementIdentifier('.child'))
                     ->withParentIdentifier(new ElementIdentifier('/parent')),
             ],
-            'xpath parent > xpath child' => [
-                'identifierString' => '$"{{ $"/parent" }} /child"',
+            'xpath parent >> xpath child' => [
+                'identifierString' => '$"/parent" >> $"/child"',
                 'expectedIdentifier' => (new ElementIdentifier('/child'))
                     ->withParentIdentifier(new ElementIdentifier('/parent')),
             ],
-            'grandparent > parent > child' => [
-                'string' => '$"{{ $"{{ $".grandparent" }} .parent" }} .child"',
+            'grandparent >> parent >> child' => [
+                'string' => '$".grandparent" >> $".parent" >> $".child"',
                 'expectedIdentifier' => (new ElementIdentifier('.child'))
                     ->withParentIdentifier(
                         (new ElementIdentifier('.parent'))
                             ->withParentIdentifier(new ElementIdentifier('.grandparent'))
                     ),
             ],
-            'great-grandparent > grandparent > parent > child' => [
-                'string' => '$"{{ $"{{ $"{{ $".great-grandparent" }} .grandparent }} .parent" }} .child"',
+            'great-grandparent >> grandparent >> parent >> child' => [
+                'string' => '$".great-grandparent" >> $".grandparent" >> $".parent" >> $".child"',
                 'expectedIdentifier' => (new ElementIdentifier('.child'))
                     ->withParentIdentifier(
                         (new ElementIdentifier('.parent'))

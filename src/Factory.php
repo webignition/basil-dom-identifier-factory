@@ -156,10 +156,6 @@ class Factory
 
     private function isAttributeIdentifierMatch(string $elementIdentifier): bool
     {
-        if ('' === $elementIdentifier) {
-            return false;
-        }
-
         if (preg_match(self::POSITION_REGEX, $elementIdentifier) > 0) {
             return false;
         }
