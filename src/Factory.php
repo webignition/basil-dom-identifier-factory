@@ -4,8 +4,9 @@ declare(strict_types=1);
 
 namespace webignition\BasilDomIdentifierFactory;
 
-use webignition\BasilDomIdentifierFactory\Extractor\DescendantIdentifierExtractor;
-use webignition\BasilDomIdentifierFactory\Extractor\ElementIdentifierExtractor;
+use webignition\BasilValueExtractor\DescendantIdentifierExtractor;
+use webignition\BasilValueExtractor\ElementIdentifierExtractor;
+use webignition\BasilValueExtractor\VariableValueExtractor;
 use webignition\DomElementIdentifier\AttributeIdentifier;
 use webignition\DomElementIdentifier\ElementIdentifier;
 use webignition\DomElementIdentifier\ElementIdentifierInterface;
@@ -30,7 +31,7 @@ class Factory
         self::POSITION_LAST => -1,
     ];
 
-    private $pageElementIdentifierExtractor;
+    private $elementIdentifierExtractor;
     private $descendantExtractor;
     private $quotedStringValueExtractor;
 
@@ -39,16 +40,21 @@ class Factory
         DescendantIdentifierExtractor $descendantExtractor,
         QuotedStringValueExtractor $quotedStringValueExtractor
     ) {
-        $this->pageElementIdentifierExtractor = $pageElementIdentifierExtractor;
+        $this->elementIdentifierExtractor = $pageElementIdentifierExtractor;
         $this->descendantExtractor = $descendantExtractor;
         $this->quotedStringValueExtractor = $quotedStringValueExtractor;
     }
 
     public static function createFactory(): Factory
     {
+        $elementIdentifierExtractor = new ElementIdentifierExtractor();
+
         return new Factory(
-            ElementIdentifierExtractor::createExtractor(),
-            DescendantIdentifierExtractor::createExtractor(),
+            $elementIdentifierExtractor,
+            new DescendantIdentifierExtractor(
+                new ElementIdentifierExtractor(),
+                new VariableValueExtractor()
+            ),
             QuotedStringValueExtractor::createExtractor()
         );
     }
@@ -60,7 +66,7 @@ class Factory
             return $this->createFromDescendantIdentifierString($descendantIdentifier);
         }
 
-        $pageElementIdentifier = $this->pageElementIdentifierExtractor->extractIdentifier($identifierString);
+        $pageElementIdentifier = $this->elementIdentifierExtractor->extract($identifierString);
         if (is_string($pageElementIdentifier)) {
             return $this->createFromPageElementIdentifierString($pageElementIdentifier);
         }
