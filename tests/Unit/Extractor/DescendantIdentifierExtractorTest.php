@@ -43,6 +43,9 @@ class DescendantIdentifierExtractorTest extends \PHPUnit\Framework\TestCase
             'invalid child identifier' => [
                 'string' => '$".parent" >> ".child"',
             ],
+            'statement with non-descendant identifier' => [
+                'string' => '$".selector" is "value"',
+            ],
         ];
     }
 
@@ -115,6 +118,9 @@ class DescendantIdentifierExtractorTest extends \PHPUnit\Framework\TestCase
             'invalid parent identifier' => [
                 'string' => '$".parent >> $".child"',
             ],
+            'statement with non-descendant identifier' => [
+                'string' => '$".selector" is "value"',
+            ],
         ];
     }
 
@@ -180,6 +186,9 @@ class DescendantIdentifierExtractorTest extends \PHPUnit\Framework\TestCase
             ],
             'invalid child identifier' => [
                 'string' => '$".parent" >> ".child"',
+            ],
+            'statement with non-descendant identifier' => [
+                'string' => '$".selector" is "value"',
             ],
         ];
     }
