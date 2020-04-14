@@ -53,7 +53,7 @@ class DescendantIdentifierExtractor
         $remainder = substr($remainder, $firstIdentifierLength);
         $remainderStart = substr($remainder, 0, $descendantSeparatorLength);
 
-        if ('' === $remainder) {
+        if (self::DESCENDANT_SEPARATOR !== $remainderStart) {
             return null;
         }
 
