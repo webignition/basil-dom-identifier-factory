@@ -31,9 +31,9 @@ class Factory
         self::POSITION_LAST => -1,
     ];
 
-    private $elementIdentifierExtractor;
-    private $descendantExtractor;
-    private $quotedStringValueExtractor;
+    private ElementIdentifierExtractor $elementIdentifierExtractor;
+    private DescendantIdentifierExtractor $descendantExtractor;
+    private QuotedStringValueExtractor $quotedStringValueExtractor;
 
     public function __construct(
         ElementIdentifierExtractor $pageElementIdentifierExtractor,

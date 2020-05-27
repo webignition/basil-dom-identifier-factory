@@ -11,10 +11,7 @@ use webignition\DomElementIdentifier\ElementIdentifierInterface;
 
 class FactoryTest extends \PHPUnit\Framework\TestCase
 {
-    /**
-     * @var Factory
-     */
-    private $factory;
+    private Factory $factory;
 
     protected function setUp(): void
     {
