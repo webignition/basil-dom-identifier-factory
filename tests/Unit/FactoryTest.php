@@ -29,12 +29,15 @@ class FactoryTest extends \PHPUnit\Framework\TestCase
     public function testCreateFromIdentifierStringSuccess(
         string $identifierString,
         ElementIdentifierInterface $expectedIdentifier
-    ) {
+    ): void {
         $identifier = $this->factory->createFromIdentifierString($identifierString);
 
         $this->assertEquals($expectedIdentifier, $identifier);
     }
 
+    /**
+     * @return array[]
+     */
     public function attributeIdentifierDataProvider(): array
     {
         return [
@@ -85,6 +88,9 @@ class FactoryTest extends \PHPUnit\Framework\TestCase
         ];
     }
 
+    /**
+     * @return array[]
+     */
     public function cssSelectorIdentifierDataProvider(): array
     {
         return [
@@ -179,6 +185,9 @@ class FactoryTest extends \PHPUnit\Framework\TestCase
         ];
     }
 
+    /**
+     * @return array[]
+     */
     public function descendantIdentifierDataProvider(): array
     {
         return [
@@ -224,6 +233,9 @@ class FactoryTest extends \PHPUnit\Framework\TestCase
         ];
     }
 
+    /**
+     * @return array[]
+     */
     public function xpathExpressionIdentifierDataProvider(): array
     {
         return [
@@ -265,11 +277,14 @@ class FactoryTest extends \PHPUnit\Framework\TestCase
     /**
      * @dataProvider unknownIdentifierStringDataProvider
      */
-    public function testCreateFromIdentifierStringReturnsNull(string $identifierString)
+    public function testCreateFromIdentifierStringReturnsNull(string $identifierString): void
     {
         $this->assertNull($this->factory->createFromIdentifierString($identifierString));
     }
 
+    /**
+     * @return array[]
+     */
     public function unknownIdentifierStringDataProvider(): array
     {
         return [

@@ -97,17 +97,29 @@ class Factory
             : new AttributeIdentifier($elementLocatorString, $attributeName, $position);
     }
 
-    private function createFromDescendantIdentifierString(string $identifierString): ElementIdentifierInterface
+    private function createFromDescendantIdentifierString(string $identifierString): ?ElementIdentifierInterface
     {
         $parentIdentifier = $this->descendantExtractor->extractParentIdentifier($identifierString);
+        if (null === $parentIdentifier) {
+            return null;
+        }
+
+        $parentDomIdentifier = $this->createFromIdentifierString($parentIdentifier);
+        if (null === $parentDomIdentifier) {
+            return null;
+        }
+
         $childIdentifier = $this->descendantExtractor->extractChildIdentifier($identifierString);
+        if (null === $childIdentifier) {
+            return null;
+        }
 
         $childDomIdentifier = $this->createFromIdentifierString($childIdentifier);
-        $parentDomIdentifier = $this->createFromIdentifierString($parentIdentifier);
+        if (null === $childDomIdentifier) {
+            return null;
+        }
 
-        $childDomIdentifier = $childDomIdentifier->withParentIdentifier($parentDomIdentifier);
-
-        return $childDomIdentifier;
+        return $childDomIdentifier->withParentIdentifier($parentDomIdentifier);
     }
 
     private function findAttributeName(string $identifierString): string
