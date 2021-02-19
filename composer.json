@@ -42,9 +42,9 @@
     "require": {
         "php": ">=7.4",
         "ext-mbstring": "*",
-        "webignition/basil-value-extractor": ">=0.4,<1",
-        "webignition/php-dom-element-identifier": ">=0.14,<1",
-        "webignition/quoted-string-value-extractor": ">=0.2,<1"
+        "webignition/basil-value-extractor": ">=0.5,<1",
+        "webignition/php-dom-element-identifier": ">=0.15,<1",
+        "webignition/quoted-string-value-extractor": ">=0.3,<1"
     },
     "require-dev": {
         "phpstan/phpstan": "^0.12.77",
