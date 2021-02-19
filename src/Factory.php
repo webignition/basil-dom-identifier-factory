@@ -119,9 +119,7 @@ class Factory
             return null;
         }
 
-        $childDomIdentifier = $childDomIdentifier->withParentIdentifier($parentDomIdentifier);
-
-        return $childDomIdentifier;
+        return $childDomIdentifier->withParentIdentifier($parentDomIdentifier);
     }
 
     private function findAttributeName(string $identifierString): string
