@@ -20,7 +20,7 @@ class Factory
     private const POSITION_REGEX = '/' . self::POSITION_PATTERN . '$/';
 
     /**
-     * Pattern for characters not allowed in an html attribute name
+     * Pattern for characters not allowed in an html attribute name.
      *
      * @see https://html.spec.whatwg.org/multipage/syntax.html#attributes-2
      */

@@ -36,7 +36,7 @@ class FactoryTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @return array[]
+     * @return array<mixed>
      */
     public function attributeIdentifierDataProvider(): array
     {
@@ -89,7 +89,7 @@ class FactoryTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @return array[]
+     * @return array<mixed>
      */
     public function cssSelectorIdentifierDataProvider(): array
     {
@@ -186,7 +186,7 @@ class FactoryTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @return array[]
+     * @return array<mixed>
      */
     public function descendantIdentifierDataProvider(): array
     {
@@ -234,7 +234,7 @@ class FactoryTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @return array[]
+     * @return array<mixed>
      */
     public function xpathExpressionIdentifierDataProvider(): array
     {
@@ -283,7 +283,7 @@ class FactoryTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @return array[]
+     * @return array<mixed>
      */
     public function unknownIdentifierStringDataProvider(): array
     {
