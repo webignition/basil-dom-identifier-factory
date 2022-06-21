@@ -31,18 +31,11 @@ class Factory
         self::POSITION_LAST => -1,
     ];
 
-    private ElementIdentifierExtractor $elementIdentifierExtractor;
-    private DescendantIdentifierExtractor $descendantExtractor;
-    private QuotedStringValueExtractor $quotedStringValueExtractor;
-
     public function __construct(
-        ElementIdentifierExtractor $pageElementIdentifierExtractor,
-        DescendantIdentifierExtractor $descendantExtractor,
-        QuotedStringValueExtractor $quotedStringValueExtractor
+        private readonly ElementIdentifierExtractor $elementIdentifierExtractor,
+        private readonly DescendantIdentifierExtractor $descendantExtractor,
+        private readonly QuotedStringValueExtractor $quotedStringValueExtractor
     ) {
-        $this->elementIdentifierExtractor = $pageElementIdentifierExtractor;
-        $this->descendantExtractor = $descendantExtractor;
-        $this->quotedStringValueExtractor = $quotedStringValueExtractor;
     }
 
     public static function createFactory(): Factory
@@ -115,11 +108,8 @@ class Factory
         }
 
         $childDomIdentifier = $this->createFromIdentifierString($childIdentifier);
-        if (null === $childDomIdentifier) {
-            return null;
-        }
 
-        return $childDomIdentifier->withParentIdentifier($parentDomIdentifier);
+        return $childDomIdentifier?->withParentIdentifier($parentDomIdentifier);
     }
 
     private function findAttributeName(string $identifierString): string
