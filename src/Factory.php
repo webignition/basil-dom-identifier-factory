@@ -108,11 +108,8 @@ class Factory
         }
 
         $childDomIdentifier = $this->createFromIdentifierString($childIdentifier);
-        if (null === $childDomIdentifier) {
-            return null;
-        }
 
-        return $childDomIdentifier->withParentIdentifier($parentDomIdentifier);
+        return $childDomIdentifier?->withParentIdentifier($parentDomIdentifier);
     }
 
     private function findAttributeName(string $identifierString): string
